@@ -1,5 +1,5 @@
 """
-portal_core/config.py - Configuration Module for SoilGaurd Portal.
+portal_core/config.py - Configuration Module for SoilGuard Portal.
 
 Validates and loads environmental settings, soil sensor thresholds, hardware control maps, and consent metrics.
 """
@@ -221,7 +221,7 @@ def print_config(config: SoilGuardConfig):
     Format and dump configuration state for visual validation during boot.
     """
     logger.info("=" * 60)
-    logger.info("SoilGaurd Portal Operational Parameters")
+    logger.info("SoilGuard Portal Operational Parameters")
     logger.info("=" * 60)
     logger.info(f"Ollama Target   : {config.ollama.host} (model: {config.ollama.model})")
     logger.info(f"MQTT Target     : {config.mqtt.broker}:{config.mqtt.port} (topic: {config.mqtt.topic_prefix}/#)")

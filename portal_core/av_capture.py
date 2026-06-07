@@ -1,5 +1,5 @@
 """
-portal_core/av_capture.py - Audio/Video Capture Module for SoilGaurd Portal.
+portal_core/av_capture.py - Audio/Video Capture Module for SoilGuard Portal.
 
 Handles OpenCV camera frames and PyAudio recordings. Includes mock fallbacks for testing.
 """

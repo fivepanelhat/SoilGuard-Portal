@@ -1,12 +1,15 @@
-# SoilGaurd Portal: Soil Quality & Agricultural Monitor
+# SoilGuard Portal: Soil Quality & Agricultural Monitor
+
+![SoilGuard Portal Banner](assets/social_preview.png)
 
 **Coastal Alpine Tech Limited**  
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
-[![Hardware](https://img.shields.io/badge/Hardware-RPi_5_%2B_AI_HAT%2B_(Hailo)-orange.svg)]()  
-[![Compliance](https://img.shields.io/badge/Compliance-NES--F_2020_%7C_FWFP_%7C_Waikato_Plan-green.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
+[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
+[![Hardware: Edge AI](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%20%2B%20NPU-orange.svg)]()  
+[![Sovereignty: Offline Native](https://img.shields.io/badge/Sovereignty-Offline%20Native-green.svg)]()  
+[![CI/CD: Active](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/SoilGuard-Portal/actions)
 
 Autonomous on-premise soil quality monitoring and agricultural control system for New Zealand dairy farms, glasshouses, and orchards. Powered by local edge AI, it runs fully offline in remote and regulated rural catchments to maintain data sovereignty.
 
@@ -18,7 +21,7 @@ Autonomous on-premise soil quality monitoring and agricultural control system fo
 * **What:** An edge-native IoT monitor and agentic control system that ingests soil telemetry (moisture, temperature, EC, N-P-K), visual leaf health cues, and acoustic diagnostics to optimize crop yield and generate council-ready environmental audits.
 * **Where:** Deployed on-premise at nurseries, glasshouses, orchards, and pastoral runoff sites across New Zealand. HQ in New Plymouth, Taranaki.
 * **When:** Active development as of June 2026.
-* **Why:** Synthetic nitrogen fertilizer caps and Freshwater Farm Plan rules require farm operators to strictly manage soil runoffs and leaching. SoilGaurd provides on-device data logging and localized automation without relying on vulnerable, non-sovereign cloud services.
+* **Why:** Synthetic nitrogen fertilizer caps and Freshwater Farm Plan rules require farm operators to strictly manage soil runoffs and leaching. SoilGuard provides on-device data logging and localized automation without relying on vulnerable, non-sovereign cloud services.
 
 ---
 
@@ -46,7 +49,7 @@ Autonomous on-premise soil quality monitoring and agricultural control system fo
 ## Directory Structure
 
 ```bash
-SoilGaurd-Portal/
+SoilGuard-Portal/
 ├── portal_schemas/           # Pydantic schemas (compliance, readings, plans)
 ├── portal_core/              # Core modules (config, mqtt, av, hardware, pruner)
 ├── telemetry_data/           # Local ledger dumps and transient media buffers
@@ -77,15 +80,15 @@ SoilGaurd-Portal/
 
 1. **Clone the Portal Repository:**
    ```bash
-   git clone https://github.com/fivepanelhat/SoilGaurd-Portal.git
-   cd SoilGaurd-Portal
+   git clone https://github.com/fivepanelhat/SoilGuard-Portal.git
+   cd SoilGuard-Portal
    ```
 
 2. **Configure Virtual Environment:**
    ```bash
    python -m venv venv
    source venv/bin/activate  # Windows: venv\Scripts\activate
-   pip install -e ../coastal_alpine_core
+   pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
    pip install -r requirements.txt -r requirements-dev.txt
    cp .env.example .env
    ```

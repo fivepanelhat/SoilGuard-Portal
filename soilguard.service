@@ -1,18 +1,18 @@
 [Unit]
-Description=SoilGaurd Portal - Soil Quality & Agricultural Monitor
-Documentation=https://github.com/fivepanelhat/SoilGaurd-Portal
+Description=SoilGuard Portal - Soil Quality & Agricultural Monitor
+Documentation=https://github.com/fivepanelhat/SoilGuard-Portal
 After=network.target ollama.service mosquitto.service
 Requires=ollama.service
 
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/SoilGaurd-Portal
-Environment="PATH=/home/pi/SoilGaurd-Portal/venv/bin"
+WorkingDirectory=/home/pi/SoilGuard-Portal
+Environment="PATH=/home/pi/SoilGuard-Portal/venv/bin"
 Environment="PYTHONUNBUFFERED=1"
 
 # Main executable
-ExecStart=/home/pi/SoilGaurd-Portal/venv/bin/python main.py
+ExecStart=/home/pi/SoilGuard-Portal/venv/bin/python main.py
 
 # Auto-restart on failure
 Restart=on-failure

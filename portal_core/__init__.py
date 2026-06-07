@@ -1,3 +1,3 @@
 """
-portal_core - Core drivers and background loops for SoilGaurd Portal.
+portal_core - Core drivers and background loops for SoilGuard Portal.
 """

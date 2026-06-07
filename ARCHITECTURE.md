@@ -1,6 +1,6 @@
-# SoilGaurd Portal System Architecture
+# SoilGuard Portal System Architecture
 
-SoilGaurd Portal is an edge-native soil quality and agricultural monitoring system designed for full offline operation in New Zealand's remote farm environments.
+SoilGuard Portal is an edge-native soil quality and agricultural monitoring system designed for full offline operation in New Zealand's remote farm environments.
 
 ---
 

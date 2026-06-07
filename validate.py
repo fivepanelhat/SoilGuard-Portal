@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-validate.py - System Validation and Diagnostics tool for SoilGaurd Portal.
+validate.py - System Validation and Diagnostics tool for SoilGuard Portal.
 
 Runs connection verification tests for Ollama, MQTT brokers, OpenCV camera bindings,
 simulates hardware control relays, and writes audit compliance structures to disk.
@@ -29,7 +29,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
-logger = logging.getLogger("SoilGaurdPortal.Validation")
+logger = logging.getLogger("SoilGuardPortal.Validation")
 
 
 async def test_configuration():
@@ -196,7 +196,7 @@ async def test_compliance_exporter(config):
 
 async def main():
     logger.info("\n" + "#" * 60)
-    logger.info("      SoilGaurd Portal System Diagnostics Boot Sequence      ")
+    logger.info("      SoilGuard Portal System Diagnostics Boot Sequence      ")
     logger.info("#" * 60)
     
     results = {}

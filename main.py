@@ -1,5 +1,5 @@
 """
-main.py - SoilGaurd Portal Orchestrator Entrypoint.
+main.py - SoilGuard Portal Orchestrator Entrypoint.
 
 Sets up background workers, subscribes to MQTT streams, ingests visual/audio sensors,
 routes telemetry through the Gemma 4 reasoning agent, actuates pins, and dumps compliance reports.
@@ -24,12 +24,12 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
-logger = logging.getLogger("SoilGaurdPortal.Orchestrator")
+logger = logging.getLogger("SoilGuardPortal.Orchestrator")
 
 
-class SoilGaurdPortal:
+class SoilGuardPortal:
     """
-    Main execution coordinator for the SoilGaurd edge system.
+    Main execution coordinator for the SoilGuard edge system.
     """
 
     def __init__(self, config):
@@ -82,10 +82,10 @@ class SoilGaurdPortal:
         }
 
         self.is_running = False
-        logger.info("SoilGaurd Portal system components initialized.")
+        logger.info("SoilGuard Portal system components initialized.")
 
     async def start(self):
-        logger.info("Powering up SoilGaurd Portal services...")
+        logger.info("Powering up SoilGuard Portal services...")
         self.is_running = True
 
         # Initialise hardware GPIO configuration
@@ -109,7 +109,7 @@ class SoilGaurdPortal:
         self.mqtt_task = asyncio.create_task(self.mqtt_listener_loop())
         self.evaluation_task = asyncio.create_task(self.evaluation_control_loop())
 
-        logger.info("✓ SoilGaurd Portal is ONLINE and executing.")
+        logger.info("✓ SoilGuard Portal is ONLINE and executing.")
 
         try:
             await asyncio.gather(
@@ -121,7 +121,7 @@ class SoilGaurdPortal:
             logger.info("Subsystem loops cancelled.")
 
     async def stop(self):
-        logger.info("Initiating graceful teardown of SoilGaurd Portal...")
+        logger.info("Initiating graceful teardown of SoilGuard Portal...")
         self.is_running = False
 
         # Terminate background tasks
@@ -138,7 +138,7 @@ class SoilGaurdPortal:
         await self.mqtt_client.disconnect()
         await self.hardware_control.cleanup()
 
-        logger.info("✓ SoilGaurd Portal shutdown complete.")
+        logger.info("✓ SoilGuard Portal shutdown complete.")
 
     async def health_check(self) -> dict:
         health = {
@@ -302,7 +302,7 @@ async def main():
         logger.error(f"Failed loading initial settings configurations: {e}")
         return
 
-    portal = SoilGaurdPortal(config)
+    portal = SoilGuardPortal(config)
 
     # Register OS signals
     loop = asyncio.get_running_loop()

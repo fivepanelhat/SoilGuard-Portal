@@ -1,5 +1,5 @@
 """
-tests/test_security_stress.py - Security and Stress tests for SoilGaurd Portal.
+tests/test_security_stress.py - Security and Stress tests for SoilGuard Portal.
 
 Verifies input bounds, Pydantic type safety checks, and disk pruner data retention guarantees.
 """

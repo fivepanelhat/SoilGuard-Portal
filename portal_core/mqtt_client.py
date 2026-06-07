@@ -1,5 +1,5 @@
 """
-portal_core/mqtt_client.py - MQTT Client Module for SoilGaurd Portal.
+portal_core/mqtt_client.py - MQTT Client Module for SoilGuard Portal.
 
 Manages connection to Mosquitto broker and registers subscriptions for soil sensors.
 """

@@ -1,5 +1,5 @@
 """
-portal_core/media_pruner.py - Media Pruner Module for SoilGaurd Portal.
+portal_core/media_pruner.py - Media Pruner Module for SoilGuard Portal.
 
 Manages disk capacity by pruning expired video frames and audio buffers while preserving compliance outputs.
 """

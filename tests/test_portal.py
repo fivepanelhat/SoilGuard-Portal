@@ -1,5 +1,5 @@
 """
-tests/test_portal.py - Unit tests for SoilGaurd Portal.
+tests/test_portal.py - Unit tests for SoilGuard Portal.
 
 Tests configuration ranges, schema structures, compliance exporters, and actuator mapping.
 """

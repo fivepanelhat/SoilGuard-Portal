@@ -1,5 +1,5 @@
 """
-portal_core/compliance_exporter.py - Compliance Exporter for SoilGaurd Portal.
+portal_core/compliance_exporter.py - Compliance Exporter for SoilGuard Portal.
 
 Exports structured soil telemetry metrics and actuation histories into council-ready formats (CSV/JSON).
 """

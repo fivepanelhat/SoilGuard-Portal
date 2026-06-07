@@ -1,5 +1,5 @@
 """
-portal_core/hardware_control.py - Hardware Control Module for SoilGaurd Portal.
+portal_core/hardware_control.py - Hardware Control Module for SoilGuard Portal.
 
 Manages GPIO/PWM controllers for irrigation, nutrient fertigation injection, and ventilation fans.
 Includes full software simulation fallbacks for development/test loops.

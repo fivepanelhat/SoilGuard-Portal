@@ -1,5 +1,5 @@
 """
-portal_core/ai_agent.py - AI Agent Module for SoilGaurd Portal.
+portal_core/ai_agent.py - AI Agent Module for SoilGuard Portal.
 
 Orchestrates local Gemma 4 multimodal inference for soil health and crop management.
 Integrates with coastal-alpine-core safety guards, retry wrappers, and telemetry trackers.
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 class AIAgent:
     """
-    Autonomous environmental reasoning agent for SoilGaurd Portal.
+    Autonomous environmental reasoning agent for SoilGuard Portal.
     Interfaces with Ollama using the shared SovereignOllamaClient wrapper.
     Ensures safe operations via input guards and logs energy metrics for edge operations.
     """
@@ -33,7 +33,7 @@ class AIAgent:
         self.ollama_host = ollama_host
         self.model = model
         self.client = SovereignOllamaClient(host=ollama_host, default_model=model)
-        logger.info(f"SoilGaurd AI Agent initialized. Target Model: {model} at {ollama_host}")
+        logger.info(f"SoilGuard AI Agent initialized. Target Model: {model} at {ollama_host}")
 
     async def analyze_sensor_state(
         self,
@@ -217,7 +217,7 @@ JSON Schema:
         measurement = TelemetryTracker.measure_latency("generate_optimization_plan")
 
         try:
-            prompt = f"""SoilGaurd Controller: Formulate a hardware actuation plan based on this state.
+            prompt = f"""SoilGuard Controller: Formulate a hardware actuation plan based on this state.
 Sensors Analysis: {str(sensor_analysis)}
 Canopy Visuals Ingestion: {str(visual_analysis)}
 Acoustic Watchdog: {str(audio_analysis)}

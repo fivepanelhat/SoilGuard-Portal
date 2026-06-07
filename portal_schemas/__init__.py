@@ -1,5 +1,5 @@
 """
-portal_schemas - Exports schemas for SoilGaurd Portal.
+portal_schemas - Exports schemas for SoilGuard Portal.
 """
 
 from .compliance import (

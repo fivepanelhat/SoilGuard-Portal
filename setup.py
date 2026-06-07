@@ -1,5 +1,5 @@
 """
-setup.py - SoilGaurd Portal Package Configuration
+setup.py - SoilGuard Portal Package Configuration
 
 Enables installation via 'pip install .' or 'pip install -e .'
 """
@@ -15,14 +15,14 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
     ]
 
 setup(
-    name="soilgaurd-portal",
+    name="soilguard-portal",
     version="0.1.0",
     author="Coastal Alpine Tech Limited",
     author_email="info@coastalalpine.co.nz",
     description="Autonomous on-premise soil quality monitoring and agricultural control system with edge AI",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/fivepanelhat/SoilGaurd-Portal",
+    url="https://github.com/fivepanelhat/SoilGuard-Portal",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -41,7 +41,7 @@ setup(
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "soilgaurd-portal=main:main",
+            "soilguard-portal=main:main",
         ],
     },
     keywords="soil-quality agriculture IoT edge-ai crops compliance",

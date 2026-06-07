@@ -1,5 +1,5 @@
 """
-portal_schemas/compliance.py - Pydantic models for SoilGaurd Portal.
+portal_schemas/compliance.py - Pydantic models for SoilGuard Portal.
 
 Defines schemas for soil sensors, reasoning states, hardware controls, and regional council audit logs.
 """
