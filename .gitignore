@@ -1,0 +1,28 @@
+# Environments
+.venv/
+venv/
+ENV/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local configuration files
+.env
+
+# Data buffers
+telemetry_data/
+media/
+sensor_logs/
+compliance/
+
+# IDE files
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
