@@ -72,7 +72,7 @@ SoilGuard-Portal/
 
 ### Hardware Prerequisites
 * **Raspberry Pi 5 (16GB RAM)** — Available locally via PB Tech or Kiwi Electronics.
-* **Raspberry Pi AI HAT+** (26 TOPS, Hailo-8 NPU) — Key for offline generative AI workloads.
+* **Raspberry Pi AI HAT+** (26 TOPS, Hailo-10L NPU) — Key for offline generative AI workloads.
 * **Soil Probes & ESP32 gateway** — Telemetry sensors broadcasting over MQTT.
 * **USB/CSI Camera** — Installed above crop canopy in IP67 enclosure.
 
