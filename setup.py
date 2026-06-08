@@ -16,7 +16,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="soilguard-portal",
-    version="0.1.0",
+    version="1.2.0",
     author="Coastal Alpine Tech Limited",
     author_email="info@coastalalpine.co.nz",
     description="Autonomous on-premise soil quality monitoring and agricultural control system with edge AI",
