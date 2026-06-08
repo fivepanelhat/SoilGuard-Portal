@@ -13,7 +13,8 @@
 [![CI/CD: Active](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/SoilGuard-Portal/actions)  
 [![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/SoilGuard-Portal/security-scan.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/security-scan.yml)  
 [![Dependabot](https://img.shields.io/badge/Dependencies-Monitored-brightgreen?style=flat-square&logo=dependabot)]()  
-[![Interop](https://img.shields.io/badge/Interop-MQTT%20%7C%20OPC--UA-orange?style=flat-square)]()
+[![Interop](https://img.shields.io/badge/Interop-MQTT%20%7C%20OPC--UA-orange?style=flat-square)]()  
+[![Sustainability](https://img.shields.io/badge/EECA%20NZ-Carbon%20Tracked-green?style=flat-square)]()
 
 Autonomous on-premise soil quality monitoring and agricultural control system for New Zealand dairy farms, glasshouses, and orchards. Powered by local edge AI, it runs fully offline in remote and regulated rural catchments to maintain data sovereignty.
 
