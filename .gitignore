@@ -26,3 +26,26 @@ compliance/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Coastal Alpine Tech - SoilGuard SecOps
+.env.*
+*.pem
+*.key
+*.crt
+secrets/
+.secrets.baseline
+tls-certs/
+
+# Web/Portal specific
+node_modules/
+dist/
+build/
+coverage/
+
+# Agronomy Data and Local DBs (Keep Sovereign Data Local!)
+*.sqlite3
+*.csv
+soil_telemetry/
+yield_reports/
+*.log
+
