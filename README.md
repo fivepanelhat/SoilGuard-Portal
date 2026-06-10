@@ -1,5 +1,8 @@
 # SoilGuard Portal: Soil Quality & Agricultural Monitor
 
+![CI](https://github.com/UNKNOWN_OWNER/SoilGuard-Portal/actions/workflows/secops.yml/badge.svg?branch=main)
+
+
 ![SoilGuard Portal Banner](assets/social_preview.png)
 
 **Coastal Alpine Tech Limited**  
