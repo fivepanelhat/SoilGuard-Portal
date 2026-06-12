@@ -9,17 +9,24 @@ import asyncio
 import logging
 from typing import Optional, List, Dict
 from datetime import datetime
-from portal_schemas.compliance import IrrigationAction, NutrientAction, FanAction
+from portal_schemas.compliance import (
+    IrrigationAction,
+    NutrientAction,
+    FanAction,
+)
 
 logger = logging.getLogger(__name__)
 
 # Attempt importing physical GPIO module
 try:
     import RPi.GPIO as GPIO  # type: ignore
+
     ENABLE_GPIO = True
 except ImportError:
     ENABLE_GPIO = False
-    logger.warning("RPi.GPIO is unavailable; hardware control will operate in simulation mode.")
+    logger.warning(
+        "RPi.GPIO is unavailable; hardware control will operate in simulation mode."
+    )
 
 
 class HardwareControl:
@@ -82,19 +89,25 @@ class HardwareControl:
                 GPIO.setup(self.irrigation_gpio_pin, GPIO.OUT)
                 self.irrigation_pwm = GPIO.PWM(self.irrigation_gpio_pin, 1000)
                 self.irrigation_pwm.start(0)
-                logger.info(f"Irrigation GPIO pin {self.irrigation_gpio_pin} setup with PWM.")
+                logger.info(
+                    f"Irrigation GPIO pin {self.irrigation_gpio_pin} setup with PWM."
+                )
 
             if self.nutrient_gpio_pin:
                 GPIO.setup(self.nutrient_gpio_pin, GPIO.OUT)
                 self.nutrient_pwm = GPIO.PWM(self.nutrient_gpio_pin, 1000)
                 self.nutrient_pwm.start(0)
-                logger.info(f"Nutrient fertigation GPIO pin {self.nutrient_gpio_pin} setup with PWM.")
+                logger.info(
+                    f"Nutrient fertigation GPIO pin {self.nutrient_gpio_pin} setup with PWM."
+                )
 
             if self.fan_gpio_pin:
                 GPIO.setup(self.fan_gpio_pin, GPIO.OUT)
                 self.fan_pwm = GPIO.PWM(self.fan_gpio_pin, 1000)
                 self.fan_pwm.start(0)
-                logger.info(f"Ventilation fan GPIO pin {self.fan_gpio_pin} setup with PWM.")
+                logger.info(
+                    f"Ventilation fan GPIO pin {self.fan_gpio_pin} setup with PWM."
+                )
 
             if self.alert_gpio_pin:
                 GPIO.setup(self.alert_gpio_pin, GPIO.OUT)
@@ -103,7 +116,9 @@ class HardwareControl:
 
             logger.info("✓ Hardware Control Setup successfully.")
         except Exception as e:
-            logger.error(f"✗ Failed setting up GPIO pins: {e}. Enabling simulation fallback.")
+            logger.error(
+                f"✗ Failed setting up GPIO pins: {e}. Enabling simulation fallback."
+            )
             self.simulation_mode = True
 
     async def cleanup(self):
@@ -129,18 +144,22 @@ class HardwareControl:
                 IrrigationAction.OFF: 0,
                 IrrigationAction.LOW: 30,
                 IrrigationAction.MEDIUM: 60,
-                IrrigationAction.HIGH: 100
+                IrrigationAction.HIGH: 100,
             }
             dc = duty_map.get(state, 0)
             self.irrigation_state = state
             self.irrigation_duty_cycle = dc
 
             if self.simulation_mode:
-                logger.info(f"[SIM] Irrigation state -> {state.value} (PWM {dc}%)")
+                logger.info(
+                    f"[SIM] Irrigation state -> {state.value} (PWM {dc}%)"
+                )
             else:
                 if self.irrigation_pwm:
                     self.irrigation_pwm.ChangeDutyCycle(dc)
-                    logger.info(f"Irrigation state -> {state.value} (PWM {dc}%)")
+                    logger.info(
+                        f"Irrigation state -> {state.value} (PWM {dc}%)"
+                    )
 
             self._record_action("irrigation", state.value, dc)
             return True
@@ -154,18 +173,22 @@ class HardwareControl:
                 NutrientAction.OFF: 0,
                 NutrientAction.LOW: 33,
                 NutrientAction.MEDIUM: 66,
-                NutrientAction.HIGH: 100
+                NutrientAction.HIGH: 100,
             }
             dc = duty_map.get(state, 0)
             self.nutrient_state = state
             self.nutrient_duty_cycle = dc
 
             if self.simulation_mode:
-                logger.info(f"[SIM] Nutrient pump state -> {state.value} (PWM {dc}%)")
+                logger.info(
+                    f"[SIM] Nutrient pump state -> {state.value} (PWM {dc}%)"
+                )
             else:
                 if self.nutrient_pwm:
                     self.nutrient_pwm.ChangeDutyCycle(dc)
-                    logger.info(f"Nutrient pump state -> {state.value} (PWM {dc}%)")
+                    logger.info(
+                        f"Nutrient pump state -> {state.value} (PWM {dc}%)"
+                    )
 
             self._record_action("nutrient", state.value, dc)
             return True
@@ -179,18 +202,22 @@ class HardwareControl:
                 FanAction.OFF: 0,
                 FanAction.LOW: 33,
                 FanAction.MEDIUM: 66,
-                FanAction.HIGH: 100
+                FanAction.HIGH: 100,
             }
             dc = duty_map.get(state, 0)
             self.fan_state = state
             self.fan_duty_cycle = dc
 
             if self.simulation_mode:
-                logger.info(f"[SIM] Ventilation Fan state -> {state.value} (PWM {dc}%)")
+                logger.info(
+                    f"[SIM] Ventilation Fan state -> {state.value} (PWM {dc}%)"
+                )
             else:
                 if self.fan_pwm:
                     self.fan_pwm.ChangeDutyCycle(dc)
-                    logger.info(f"Ventilation Fan state -> {state.value} (PWM {dc}%)")
+                    logger.info(
+                        f"Ventilation Fan state -> {state.value} (PWM {dc}%)"
+                    )
 
             self._record_action("fan", state.value, val=dc)
             return True
@@ -201,13 +228,17 @@ class HardwareControl:
     async def trigger_alert(self, duration_ms: int = 500):
         try:
             if self.simulation_mode:
-                logger.warning(f"[SIM] Alert relay triggered for {duration_ms}ms.")
+                logger.warning(
+                    f"[SIM] Alert relay triggered for {duration_ms}ms."
+                )
             else:
                 if self.alert_gpio_pin:
                     GPIO.output(self.alert_gpio_pin, GPIO.HIGH)
                     await asyncio.sleep(duration_ms / 1000.0)
                     GPIO.output(self.alert_gpio_pin, GPIO.LOW)
-                    logger.warning(f"Alert relay triggered for {duration_ms}ms.")
+                    logger.warning(
+                        f"Alert relay triggered for {duration_ms}ms."
+                    )
 
             self._record_action("alert", "triggered", duration_ms)
         except Exception as e:
@@ -218,8 +249,10 @@ class HardwareControl:
         Translates a Pydantic-validated SoilOptimizationPlan dict into pin signals.
         """
         try:
-            logger.info(f"Enforcing action plan: {plan.get('plan_id', 'unknown')}")
-            
+            logger.info(
+                f"Enforcing action plan: {plan.get('plan_id', 'unknown')}"
+            )
+
             irrigation_action = plan.get("irrigation_action")
             nutrient_action = plan.get("nutrient_action")
             fan_action = plan.get("fan_action")
@@ -227,17 +260,29 @@ class HardwareControl:
             success = True
 
             if irrigation_action:
-                state = IrrigationAction(irrigation_action.lower() if isinstance(irrigation_action, str) else irrigation_action)
+                state = IrrigationAction(
+                    irrigation_action.lower()
+                    if isinstance(irrigation_action, str)
+                    else irrigation_action
+                )
                 ok = await self.set_irrigation(state)
                 success = success and ok
 
             if nutrient_action:
-                state = NutrientAction(nutrient_action.lower() if isinstance(nutrient_action, str) else nutrient_action)
+                state = NutrientAction(
+                    nutrient_action.lower()
+                    if isinstance(nutrient_action, str)
+                    else nutrient_action
+                )
                 ok = await self.set_nutrient(state)
                 success = success and ok
 
             if fan_action:
-                state = FanAction(fan_action.lower() if isinstance(fan_action, str) else fan_action)
+                state = FanAction(
+                    fan_action.lower()
+                    if isinstance(fan_action, str)
+                    else fan_action
+                )
                 ok = await self.set_fan(state)
                 success = success and ok
 
@@ -251,12 +296,14 @@ class HardwareControl:
             return False
 
     def _record_action(self, device: str, action: str, val: int):
-        self.action_history.append({
-            "timestamp": datetime.now().isoformat(),
-            "device": device,
-            "action": action,
-            "value": val
-        })
+        self.action_history.append(
+            {
+                "timestamp": datetime.now().isoformat(),
+                "device": device,
+                "action": action,
+                "value": val,
+            }
+        )
         if len(self.action_history) > 1000:
             self.action_history.pop(0)
 
@@ -264,21 +311,25 @@ class HardwareControl:
         return {
             "irrigation": {
                 "state": self.irrigation_state.value,
-                "duty_cycle_pct": self.irrigation_duty_cycle
+                "duty_cycle_pct": self.irrigation_duty_cycle,
             },
             "nutrient": {
                 "state": self.nutrient_state.value,
-                "duty_cycle_pct": self.nutrient_duty_cycle
+                "duty_cycle_pct": self.nutrient_duty_cycle,
             },
             "fan": {
                 "state": self.fan_state.value,
-                "duty_cycle_pct": self.fan_duty_cycle
+                "duty_cycle_pct": self.fan_duty_cycle,
             },
             "simulation_mode": self.simulation_mode,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }
 
     async def health_check(self) -> bool:
         if not self.simulation_mode:
-            return bool(self.irrigation_gpio_pin or self.nutrient_gpio_pin or self.fan_gpio_pin)
+            return bool(
+                self.irrigation_gpio_pin
+                or self.nutrient_gpio_pin
+                or self.fan_gpio_pin
+            )
         return True

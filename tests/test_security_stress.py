@@ -5,17 +5,15 @@ Verifies input bounds, Pydantic type safety checks, and disk pruner data retenti
 """
 
 import os
-import shutil
 import pytest
 from datetime import datetime, timedelta
-from pathlib import Path
 from pydantic import ValidationError
 
 from portal_schemas.compliance import (
     SoilOptimizationPlan,
     IrrigationAction,
     NutrientAction,
-    FanAction
+    FanAction,
 )
 from portal_core.media_pruner import MediaPruner
 
@@ -31,7 +29,7 @@ def test_plan_confidence_score_boundaries():
         confidence_score=0.95,
         logistical_notes="Normal confidence",
         execution_window_minutes=15,
-        requires_human_review=False
+        requires_human_review=False,
     )
     assert plan.confidence_score == 0.95
 
@@ -93,7 +91,7 @@ async def test_pruner_stress_retains_compliance(tmp_path):
         p = media_dir / f"frame_{i}.jpg"
         p.write_bytes(b"MOCK_JPEG_CONTENT")
         os.utime(p, (expired_time.timestamp(), expired_time.timestamp()))
-        
+
         # Audio
         a = media_dir / f"audio_{i}.wav"
         a.write_bytes(b"MOCK_WAV_CONTENT")
@@ -110,7 +108,7 @@ async def test_pruner_stress_retains_compliance(tmp_path):
         j = compliance_dir / f"audit_record_{i}.json"
         j.write_text('{"audit_id": "test"}', encoding="utf-8")
         os.utime(j, (expired_time.timestamp(), expired_time.timestamp()))
-        
+
         c = compliance_dir / f"compliance_ledger_{i}.csv"
         c.write_text("timestamp,audit_id,status\n", encoding="utf-8")
         os.utime(c, (expired_time.timestamp(), expired_time.timestamp()))
@@ -121,16 +119,16 @@ async def test_pruner_stress_retains_compliance(tmp_path):
         sensor_logs_dir=str(logs_dir),
         compliance_dir=str(compliance_dir),
         retention_hours=48,
-        critical_disk_usage_pct=85.0
+        critical_disk_usage_pct=85.0,
     )
 
     # Execute pruning cycle
     deleted_media = await pruner.prune_old_media()
-    
+
     # Assertions
     # 10 JPEGs + 10 WAVs should be pruned
     assert deleted_media == 20
-    
+
     # Check remaining media: only fresh files should exist
     remaining_media = [f.name for f in media_dir.glob("*")]
     assert len(remaining_media) == 5

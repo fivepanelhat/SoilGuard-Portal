@@ -9,11 +9,20 @@ import asyncio
 import json
 import logging
 import re
-from typing import Optional, List, Dict
+from typing import Optional
 from datetime import datetime
 
-from coastal_alpine_core import SovereignOllamaClient, input_guard_check, TelemetryTracker
-from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
+from coastal_alpine_core import (
+    SovereignOllamaClient,
+    input_guard_check,
+    TelemetryTracker,
+)
+from portal_schemas.compliance import (
+    SoilOptimizationPlan,
+    IrrigationAction,
+    NutrientAction,
+    FanAction,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -28,17 +37,19 @@ class AIAgent:
     def __init__(
         self,
         ollama_host: str = "http://localhost:11434",
-        model: str = "gemma4:e4b"
+        model: str = "gemma4:e4b",
     ):
         self.ollama_host = ollama_host
         self.model = model
-        self.client = SovereignOllamaClient(host=ollama_host, default_model=model)
-        logger.info(f"SoilGuard AI Agent initialized. Target Model: {model} at {ollama_host}")
+        self.client = SovereignOllamaClient(
+            host=ollama_host, default_model=model
+        )
+        logger.info(
+            f"SoilGuard AI Agent initialized. Target Model: {model} at {ollama_host}"
+        )
 
     async def analyze_sensor_state(
-        self,
-        sensor_data: dict,
-        historical_context: Optional[list] = None
+        self, sensor_data: dict, historical_context: Optional[list] = None
     ) -> dict:
         """
         Analyze current soil parameters against thresholds and trends.
@@ -46,14 +57,22 @@ class AIAgent:
         # 1. Apply Input Security Guard
         data_str = f"Sensors: {sensor_data}, History: {historical_context}"
         if not input_guard_check(data_str):
-            logger.warning("Blocked prompt injection or malicious pattern in sensor payload.")
-            return self._generate_default_analysis("Security alert block: potential data injection.")
+            logger.warning(
+                "Blocked prompt injection or malicious pattern in sensor payload."
+            )
+            return self._generate_default_analysis(
+                "Security alert block: potential data injection."
+            )
 
         # 2. Setup Telemetry Profiling
         measurement = TelemetryTracker.measure_latency("analyze_sensor_state")
 
         try:
-            hist_str = f"\nHistorical context:\n{str(historical_context)}" if historical_context else ""
+            hist_str = (
+                f"\nHistorical context:\n{str(historical_context)}"
+                if historical_context
+                else ""
+            )
             prompt = f"""Soil Quality AI: Analyze these sensor readings and respond ONLY with a JSON object (no other text):
 
 Current Telemetry:
@@ -74,32 +93,38 @@ JSON Schema:
             # Run inference synchronously in a worker thread
             response = await asyncio.wait_for(
                 asyncio.to_thread(
-                    self.client.generate,
-                    prompt,
-                    model=self.model
+                    self.client.generate, prompt, model=self.model
                 ),
-                timeout=60.0
+                timeout=60.0,
             )
 
             response_text = response.get("response", "").strip()
-            
+
             # Find and parse JSON blocks
             json_match = re.search(r"\{.*\}", response_text, re.DOTALL)
             if json_match:
                 parsed_json = json.loads(json_match.group())
-                parsed_json["analysis_id"] = f"anly-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                parsed_json["analysis_id"] = (
+                    f"anly-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                )
                 parsed_json["timestamp"] = datetime.now().isoformat()
-                
+
                 # Complete profiling metrics
                 TelemetryTracker.complete_measurement(
                     measurement,
-                    token_count=response.get("eval_count", len(response_text.split())),
-                    device="RPi5+NPU"
+                    token_count=response.get(
+                        "eval_count", len(response_text.split())
+                    ),
+                    device="RPi5+NPU",
                 )
                 return parsed_json
             else:
-                logger.warning("Could not extract clean JSON block from Ollama output.")
-                return self._generate_default_analysis(f"Unformatted response: {response_text[:200]}")
+                logger.warning(
+                    "Could not extract clean JSON block from Ollama output."
+                )
+                return self._generate_default_analysis(
+                    f"Unformatted response: {response_text[:200]}"
+                )
 
         except asyncio.TimeoutError:
             logger.error("Timeout waiting for Ollama sensor analysis.")
@@ -118,7 +143,7 @@ JSON Schema:
             "ph_trend": "stable",
             "nutrient_status": "optimal",
             "observations": f"Safe fallback activated: {notes}",
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         }
 
     async def process_visual_feedback(self, frame_data: bytes) -> dict:
@@ -126,17 +151,24 @@ JSON Schema:
         Analyze camera frame for leaf/canopy health or pest behaviors.
         """
         if not frame_data:
-            return {"overall_health": "unknown", "observations": "No frame captured."}
+            return {
+                "overall_health": "unknown",
+                "observations": "No frame captured.",
+            }
 
-        measurement = TelemetryTracker.measure_latency("process_visual_feedback")
-        
+        measurement = TelemetryTracker.measure_latency(
+            "process_visual_feedback"
+        )
+
         try:
             prompt = """Soil Visual Assessor: Analyze crop canopy visual frame. Check for leaf yellowing/chlorosis, wilting, or pests. Respond ONLY with JSON:
 {"overall_health":"excellent|good|fair|poor", "anomalies":"none|chlorosis|wilting|pests|other", "confidence":"high|medium|low"}"""
-            
+
             response = await asyncio.wait_for(
-                asyncio.to_thread(self.client.generate, prompt, model=self.model),
-                timeout=45.0
+                asyncio.to_thread(
+                    self.client.generate, prompt, model=self.model
+                ),
+                timeout=45.0,
             )
 
             text = response.get("response", "").strip()
@@ -145,36 +177,51 @@ JSON Schema:
                 result = json.loads(json_match.group())
                 result["frame_bytes"] = len(frame_data)
                 result["timestamp"] = datetime.now().isoformat()
-                
+
                 TelemetryTracker.complete_measurement(
                     measurement,
                     token_count=response.get("eval_count", len(text.split())),
-                    device="RPi5+NPU"
+                    device="RPi5+NPU",
                 )
                 return result
-            
-            return {"overall_health": "good", "observations": text[:300], "frame_bytes": len(frame_data)}
+
+            return {
+                "overall_health": "good",
+                "observations": text[:300],
+                "frame_bytes": len(frame_data),
+            }
 
         except Exception as e:
             logger.error(f"Visual feedback analysis error: {e}")
-            return {"overall_health": "unknown", "error": str(e), "frame_bytes": len(frame_data)}
+            return {
+                "overall_health": "unknown",
+                "error": str(e),
+                "frame_bytes": len(frame_data),
+            }
 
     async def process_audio_feedback(self, audio_data: bytes) -> dict:
         """
         Analyze microphone feedback for mechanical pumps or valve vibration anomalies.
         """
         if not audio_data:
-            return {"anomaly_detected": False, "observations": "No audio chunk."}
+            return {
+                "anomaly_detected": False,
+                "observations": "No audio chunk.",
+            }
 
-        measurement = TelemetryTracker.measure_latency("process_audio_feedback")
-        
+        measurement = TelemetryTracker.measure_latency(
+            "process_audio_feedback"
+        )
+
         try:
             prompt = """Soil Acoustic Vibration Watchdog: Check for irrigation pump cavitation, pipe leaks, or heavy machinery noise. Respond ONLY with JSON:
 {"anomaly_detected":true|false, "type":"none|pump_cavitation|water_leak|other", "confidence":"high|medium|low"}"""
 
             response = await asyncio.wait_for(
-                asyncio.to_thread(self.client.generate, prompt, model=self.model),
-                timeout=45.0
+                asyncio.to_thread(
+                    self.client.generate, prompt, model=self.model
+                ),
+                timeout=45.0,
             )
 
             text = response.get("response", "").strip()
@@ -183,14 +230,14 @@ JSON Schema:
                 result = json.loads(json_match.group())
                 result["audio_bytes"] = len(audio_data)
                 result["timestamp"] = datetime.now().isoformat()
-                
+
                 TelemetryTracker.complete_measurement(
                     measurement,
                     token_count=response.get("eval_count", len(text.split())),
-                    device="RPi5+NPU"
+                    device="RPi5+NPU",
                 )
                 return result
-            
+
             return {"anomaly_detected": False, "observations": text[:300]}
 
         except Exception as e:
@@ -201,20 +248,26 @@ JSON Schema:
         self,
         sensor_analysis: dict,
         visual_analysis: dict,
-        audio_analysis: dict
+        audio_analysis: dict,
     ) -> dict:
         """
         Formulates a validated control plan mapping soil state and leaf assessments to actuators.
         """
-        logger.info("Synthesizing multi-modal telemetry inputs to formulate optimization actions.")
-        
+        logger.info(
+            "Synthesizing multi-modal telemetry inputs to formulate optimization actions."
+        )
+
         # Guard inputs
         inputs_str = f"Sensors: {sensor_analysis}, Vision: {visual_analysis}, Audio: {audio_analysis}"
         if not input_guard_check(inputs_str):
-            logger.warning("Blocked potential exploit patterns in plan generation inputs.")
+            logger.warning(
+                "Blocked potential exploit patterns in plan generation inputs."
+            )
             return self._generate_default_plan()
 
-        measurement = TelemetryTracker.measure_latency("generate_optimization_plan")
+        measurement = TelemetryTracker.measure_latency(
+            "generate_optimization_plan"
+        )
 
         try:
             prompt = f"""SoilGuard Controller: Formulate a hardware actuation plan based on this state.
@@ -235,16 +288,18 @@ Respond ONLY with a JSON object fitting this schema:
 }}"""
 
             response = await asyncio.wait_for(
-                asyncio.to_thread(self.client.generate, prompt, model=self.model),
-                timeout=60.0
+                asyncio.to_thread(
+                    self.client.generate, prompt, model=self.model
+                ),
+                timeout=60.0,
             )
 
             text = response.get("response", "").strip()
             json_match = re.search(r"\{.*\}", text, re.DOTALL)
-            
+
             if json_match:
                 plan_data = json.loads(json_match.group())
-                
+
                 # Check actions match allowed Enums
                 irrigation = plan_data.get("irrigation_action", "off").lower()
                 if irrigation not in ["off", "low", "medium", "high"]:
@@ -263,15 +318,17 @@ Respond ONLY with a JSON object fitting this schema:
 
                 # Validate with Pydantic SoilOptimizationPlan
                 validated = SoilOptimizationPlan(**plan_data)
-                
+
                 TelemetryTracker.complete_measurement(
                     measurement,
                     token_count=response.get("eval_count", len(text.split())),
-                    device="RPi5+NPU"
+                    device="RPi5+NPU",
                 )
                 return validated.dict()
             else:
-                logger.warning("AI optimization plan did not return structured JSON. Reverting to safe defaults.")
+                logger.warning(
+                    "AI optimization plan did not return structured JSON. Reverting to safe defaults."
+                )
                 return self._generate_default_plan()
 
         except Exception as e:
@@ -287,7 +344,7 @@ Respond ONLY with a JSON object fitting this schema:
             confidence_score=0.5,
             logistical_notes="Safe fallback parameters applied due to system exception or prompt blocking.",
             execution_window_minutes=30,
-            requires_human_review=True
+            requires_human_review=True,
         )
         return default_plan.dict()
 
