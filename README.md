@@ -1,9 +1,5 @@
 # SoilGuard Portal: Soil Quality & Agricultural Monitor
 
-![CI](https://github.com/fivepanelhat/SoilGuard-Portal.git
-/actions/workflows/secops.yml/badge.svg?branch=main)
-
-
 [![CI](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/secops.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/secops.yml)
 [![RedTeam](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/redteam.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/redteam.yml)
 
@@ -90,7 +86,25 @@ SoilGuard-Portal/
 * **Soil Probes & ESP32 gateway** — Telemetry sensors broadcasting over MQTT.
 * **USB/CSI Camera** — Installed above crop canopy in IP67 enclosure.
 
-### Installation & Run
+### Installation & Setup
+
+We provide separate guides for system environment setup and installation for Windows and Linux users:
+
+* **Prerequisites & System Setup Guide**: Read [setup.md](setup.md)
+* **Installation Guide**: Read [installation.md](installation.md)
+
+### Quick Start (Automated Setup)
+The fastest way to install is running the cross-platform bootstrap script:
+
+```bash
+python bootstrap.py
+```
+
+d-Portal
+python bootstrap.py
+```
+
+### Manual Installation & Run
 
 1. **Clone the Portal Repository:**
 
@@ -101,13 +115,33 @@ SoilGuard-Portal/
 
 2. **Configure Virtual Environment:**
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
-   pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
-   pip install -r requirements.txt -r requirements-dev.txt
-   cp .env.example .env
-   ```
+<details open>
+<summary><strong>🐧 Linux / macOS (Bash)</strong></summary>
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+pip install -r requirements.txt -r requirements-dev.txt
+cp .env.example .env
+```
+
+</details>
+
+<details>
+<summary><strong>🪟 Windows (PowerShell)</strong></summary>
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+pip install -r requirements.txt -r requirements-dev.txt
+Copy-Item .env.example .env
+```
+
+> **Note:** If you receive an execution policy error, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` first.
+
+</details>
 
 3. **Deploy Gemma 4 Model:**
 
