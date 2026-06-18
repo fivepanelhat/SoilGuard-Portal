@@ -10,9 +10,9 @@ import logging
 import re
 from typing import Optional
 from datetime import datetime
-
 import uuid
 
+from coastal_alpine_core import SovereignOllamaClient
 from coastal_alpine_core.security import SecurityGuard, SecurityResult
 from coastal_alpine_core.telemetry import TelemetryTracker
 from coastal_alpine_core.flywheel import DataFlywheel, Trajectory
@@ -39,15 +39,57 @@ class AIAgent:
         measurement = TelemetryTracker.measure_latency("generate_optimization_plan")
 
         try:
-            prompt = f"""SoilGuard Controller: Formulate a hardware actuation plan..."""
+            prompt = f"""SoilGuard Controller: Formulate a hardware actuation plan based on this state.
+Sensors Analysis: {str(sensor_analysis)}
+Canopy Visuals Ingestion: {str(visual_analysis)}
+Acoustic Watchdog: {str(audio_analysis)}
+
+Respond ONLY with a JSON object fitting this schema:
+{{
+  "plan_id": "opt-soil-YYYYMMDD-count",
+  "irrigation_action": "off|low|medium|high",
+  "nutrient_action": "off|low|medium|high",
+  "fan_action": "off|low|medium|high",
+  "confidence_score": 0.9,
+  "logistical_notes": "operational reasoning",
+  "execution_window_minutes": 15,
+  "requires_human_review": false
+}}"""
             response = await asyncio.wait_for(
                 asyncio.to_thread(self.client.generate, prompt, model=self.model),
                 timeout=60.0,
             )
 
-            # ... existing plan parsing and validation logic ...
+            text = response.get("response", "").strip()
+            json_match = re.search(r"\{.*\}", text, re.DOTALL)
+            
+            if json_match:
+                plan_data = json.loads(json_match.group())
+                
+                from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
+                
+                # Check actions match allowed Enums
+                irrigation = plan_data.get("irrigation_action", "off").lower()
+                if irrigation not in ["off", "low", "medium", "high"]:
+                    irrigation = "off"
+                plan_data["irrigation_action"] = IrrigationAction(irrigation)
 
-            plan = validated.dict()
+                nutrient = plan_data.get("nutrient_action", "off").lower()
+                if nutrient not in ["off", "low", "medium", "high"]:
+                    nutrient = "off"
+                plan_data["nutrient_action"] = NutrientAction(nutrient)
+
+                fan = plan_data.get("fan_action", "off").lower()
+                if fan not in ["off", "low", "medium", "high"]:
+                    fan = "off"
+                plan_data["fan_action"] = FanAction(fan)
+
+                # Validate with Pydantic SoilOptimizationPlan
+                validated = SoilOptimizationPlan(**plan_data)
+                plan = validated.dict()
+            else:
+                logger.warning("AI optimization plan did not return structured JSON. Reverting to safe defaults.")
+                return self._generate_default_plan()
 
             # === FULL FLYWHEEL INTEGRATION ===
             try:
@@ -80,6 +122,16 @@ class AIAgent:
         """Call this after hardware enforcement (irrigation, nutrient, fan, etc.)."""
         self.flywheel.record_hardware_outcome(plan_id, action, success, **kwargs)
 
-    def _generate_default_plan(self):
-        # existing implementation
-        pass
+    def _generate_default_plan(self) -> dict:
+        from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
+        default_plan = SoilOptimizationPlan(
+            plan_id=f"opt-soil-default-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+            irrigation_action=IrrigationAction.MEDIUM,
+            nutrient_action=NutrientAction.OFF,
+            fan_action=FanAction.MEDIUM,
+            confidence_score=0.5,
+            logistical_notes="Safe fallback parameters applied due to system exception or prompt blocking.",
+            execution_window_minutes=30,
+            requires_human_review=True
+        )
+        return default_plan.dict()
