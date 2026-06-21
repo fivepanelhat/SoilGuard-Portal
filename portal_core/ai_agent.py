@@ -16,6 +16,7 @@ from coastal_alpine_core import SovereignOllamaClient
 from coastal_alpine_core.security import SecurityGuard, SecurityResult
 from coastal_alpine_core.telemetry import TelemetryTracker
 from coastal_alpine_core.flywheel import DataFlywheel, Trajectory
+from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
 
 logger = logging.getLogger(__name__)
 security_guard = SecurityGuard()
@@ -65,8 +66,6 @@ Respond ONLY with a JSON object fitting this schema:
             
             if json_match:
                 plan_data = json.loads(json_match.group())
-                
-                from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
                 
                 # Check actions match allowed Enums
                 irrigation = plan_data.get("irrigation_action", "off").lower()
@@ -123,7 +122,6 @@ Respond ONLY with a JSON object fitting this schema:
         self.flywheel.record_hardware_outcome(plan_id, action, success, **kwargs)
 
     def _generate_default_plan(self) -> dict:
-        from portal_schemas.compliance import SoilOptimizationPlan, IrrigationAction, NutrientAction, FanAction
         default_plan = SoilOptimizationPlan(
             plan_id=f"opt-soil-default-{datetime.now().strftime('%Y%m%d%H%M%S')}",
             irrigation_action=IrrigationAction.MEDIUM,
