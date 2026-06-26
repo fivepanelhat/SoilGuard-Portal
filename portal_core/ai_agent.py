@@ -85,7 +85,7 @@ Respond ONLY with a JSON object fitting this schema:
 
                 # Validate with Pydantic SoilOptimizationPlan
                 validated = SoilOptimizationPlan(**plan_data)
-                plan = validated.dict()
+                plan = validated.model_dump()
             else:
                 logger.warning("AI optimization plan did not return structured JSON. Reverting to safe defaults.")
                 return self._generate_default_plan()
@@ -132,4 +132,4 @@ Respond ONLY with a JSON object fitting this schema:
             execution_window_minutes=30,
             requires_human_review=True
         )
-        return default_plan.dict()
+        return default_plan.model_dump()

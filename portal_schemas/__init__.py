@@ -1,23 +1,3 @@
 """
-portal_schemas - Exports schemas for SoilGuard Portal.
+portal_schemas package.
 """
-
-from .compliance import (
-    IrrigationAction,
-    NutrientAction,
-    FanAction,
-    SoilSensorReading,
-    SoilAnalysisResult,
-    SoilOptimizationPlan,
-    ComplianceRecord,
-)
-
-__all__ = [
-    "IrrigationAction",
-    "NutrientAction",
-    "FanAction",
-    "SoilSensorReading",
-    "SoilAnalysisResult",
-    "SoilOptimizationPlan",
-    "ComplianceRecord",
-]
