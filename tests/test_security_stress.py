@@ -15,7 +15,7 @@ from portal_schemas.compliance import (
     NutrientAction,
     FanAction,
 )
-from portal_core.media_pruner import MediaPruner
+from coastal_alpine_core.portal_core.media_pruner import MediaPruner
 
 
 def test_plan_confidence_score_boundaries():

@@ -16,12 +16,12 @@ from datetime import datetime
 # Add portal root to import path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from portal_core.config import load_config, print_config
-from portal_core.ai_agent import AIAgent
-from portal_core.mqtt_client import MQTTClient
-from portal_core.av_capture import AVCapture
-from portal_core.hardware_control import HardwareControl
-from portal_core.compliance_exporter import ComplianceExporter
+from coastal_alpine_core.portal_core.config import load_soilguard_config, print_config
+from coastal_alpine_core.portal_core.ai_agent import AIAgent
+from coastal_alpine_core.portal_core.mqtt_client import MQTTClient
+from coastal_alpine_core.portal_core.av_capture import AVCapture
+from coastal_alpine_core.portal_core.hardware_control import HardwareController
+from coastal_alpine_core.portal_core.compliance_exporter import ComplianceExporter
 from portal_schemas.compliance import ComplianceRecord
 
 logging.basicConfig(
@@ -36,7 +36,7 @@ async def test_configuration():
     logger.info("DIAGNOSTIC TEST 1: Configuration Loading")
     logger.info("=" * 60)
     try:
-        config = load_config()
+        config = load_soilguard_config()
         print_config(config)
         logger.info("✓ Configuration test PASSED.")
         return config
@@ -137,7 +137,7 @@ async def test_hardware_control(config):
     logger.info("DIAGNOSTIC TEST 5: Actuator Relays Verification")
     logger.info("=" * 60)
     try:
-        hw = HardwareControl(
+        hw = HardwareController(
             irrigation_gpio_pin=config.hardware.irrigation_gpio_pin,
             nutrient_gpio_pin=config.hardware.nutrient_gpio_pin,
             fan_gpio_pin=config.hardware.fan_gpio_pin,

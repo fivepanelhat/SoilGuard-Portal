@@ -15,8 +15,8 @@ from datetime import datetime
 # Add portal root to import path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from portal_core.config import load_config, SoilGuardConfig
-from portal_core.compliance_exporter import ComplianceExporter
+from coastal_alpine_core.portal_core.config import load_soilguard_config, SoilGuardConfig
+from coastal_alpine_core.portal_core.compliance_exporter import ComplianceExporter
 from portal_schemas.compliance import (
     SoilSensorReading,
     SoilAnalysisResult,
@@ -39,7 +39,7 @@ def temp_compliance_dir(tmp_path):
 
 def test_config_load():
     """Verify config structures and default ranges."""
-    config = load_config()
+    config = load_soilguard_config()
     assert isinstance(config, SoilGuardConfig)
     assert config.thresholds.moisture_min < config.thresholds.moisture_max
     assert config.thresholds.temp_max > 0
