@@ -121,7 +121,7 @@ python bootstrap.py
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git@v0.2.0
 pip install -r requirements.txt -r requirements-dev.txt
 cp .env.example .env
 ```
@@ -134,7 +134,7 @@ cp .env.example .env
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git@v0.2.0
 pip install -r requirements.txt -r requirements-dev.txt
 Copy-Item .env.example .env
 ```
