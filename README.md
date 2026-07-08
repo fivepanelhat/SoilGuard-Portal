@@ -1,6 +1,6 @@
 # SoilGuard Portal: Soil Quality & Agricultural Monitor
 
-[![CI](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/secops.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/secops.yml)
+[![CI](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/ci-scan.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/ci-scan.yml)
 [![RedTeam](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/redteam.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/redteam.yml)
 
 ![SoilGuard Portal Banner](assets/social_preview.png)
