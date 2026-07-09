@@ -33,7 +33,7 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit Security Scan
-        # CRITICAL SECOPS CONFIG: We explicitly exclude the stress tests folder.
+        # CRITICAL SECOPS CONFIG: We explicitly exclude the stress tests file.
         # Otherwise, our simulated prompt injections and mock JWTs will trip the alarms!
         # -ll means report only Medium and High severity issues.
-        run: bandit -r . -ll --exclude ./tests_security_stress/
+        run: bandit -r . -ll --exclude ./tests/test_security_stress.py
