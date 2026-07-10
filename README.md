@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/badge/License-Proprietary--Commercial-blue?style=flat-square)](LICENSE)  
 [![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
 ![Hardware Target](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%2016GB-C11A5B?style=flat-square&logo=raspberry-pi&logoColor=white)  
-![Hardware: Edge AI](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%20%2B%20Hailo--10L%20NPU-orange.svg)  
+![NPU Acceleration](https://img.shields.io/badge/NPU-Hailo--10H%20Accelerated-005A9C?style=flat-square)  
 ![Sovereignty](https://img.shields.io/badge/Sovereignty-NZ%20Data%20Bound-00247D?style=flat-square)  
 [![CI/CD: Active](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/SoilGuard-Portal/actions)  
 [![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/SoilGuard-Portal/secops.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/SoilGuard-Portal/actions/workflows/secops.yml)  
@@ -82,7 +82,7 @@ SoilGuard-Portal/
 ### Hardware Prerequisites
 
 * **Raspberry Pi 5 (16GB RAM)** — Available locally via PB Tech or Kiwi Electronics.
-* **Raspberry Pi AI HAT+** (26 TOPS, Hailo-10L NPU) — Key for offline generative AI workloads.
+* **Raspberry Pi AI Accelerator / AI HAT+ 2** (40 TOPS, Hailo-10H NPU) — Key for offline generative AI workloads.
 * **Soil Probes & ESP32 gateway** — Telemetry sensors broadcasting over MQTT.
 * **USB/CSI Camera** — Installed above crop canopy in IP67 enclosure.
 
