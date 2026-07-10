@@ -10,6 +10,85 @@ Autonomous on-premise soil quality monitoring and agricultural control system fo
 
 ---
 
+## Architecture Overview
+
+SoilGuard monitors soil health and fertigation on-device. Sensor streams and optional vision feed **Gemma 4 via Ollama** on **RPi 5 16GB + Hailo-10H**, with actuator lockouts for regulatory safety.
+
+![SoilGuard architecture — liquid glass overview](assets/architecture_overview.png)
+
+### System map
+
+```mermaid
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontSize": "16px",
+    "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+    "primaryColor": "#0ea5e9",
+    "primaryTextColor": "#f8fafc",
+    "primaryBorderColor": "#38bdf8",
+    "lineColor": "#67e8f9",
+    "secondaryColor": "#1e293b",
+    "tertiaryColor": "#0f172a",
+    "clusterBkg": "#0b1220cc",
+    "clusterBorder": "#38bdf880",
+    "titleColor": "#e2e8f0"
+  },
+  "flowchart": {
+    "nodeSpacing": 40,
+    "rankSpacing": 48,
+    "padding": 20,
+    "htmlLabels": true,
+    "curve": "basis"
+  }
+}}%%
+flowchart TB
+
+    classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
+    classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
+    classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
+    classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
+    classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
+    classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
+    classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
+
+    subgraph IN["① Field inputs"]
+        S["Soil probes<br/>N-P-K · moisture · pH · EC"]
+        V["Vision optional<br/>leaf / canopy cues"]
+    end
+
+    subgraph EDGE["② Edge agent — RPi 5 16GB + Hailo-10H"]
+        CORE["Coastal-Alpine-Core"]
+        LLM["Gemma 4 via Ollama"]
+        AG["SoilGuard AI agent"]
+    end
+
+    subgraph OUT["③ Control & records"]
+        FERT["Fertigation lockouts / setpoints"]
+        ALERT["Operator alerts"]
+        STORE["Local telemetry · compliance logs"]
+    end
+
+    S & V --> CORE --> LLM --> AG
+    AG --> FERT & ALERT & STORE
+
+    class S,V sense
+    class CORE,AG core
+    class LLM ai
+    class FERT,ALERT act
+    class STORE store
+```
+
+| Layer | Components | Role |
+| :--- | :--- | :--- |
+| **Sensors** | N-P-K · moisture · pH · EC | On-paddock soil truth |
+| **Agent** | Gemma 4 + Core SDK | Offline decisions |
+| **Safety** | Fertigation lockouts | NES-F / regional rules |
+| **Hardware** | RPi 5 16GB + Hailo-10H | Canonical edge target |
+
+*Full detail: [ARCHITECTURE.md](./ARCHITECTURE.md)*
+
+
 ## The 5 Ws: Project Context
 
 * **Who:** Developed by Coastal Alpine Tech Limited in partnership with Taranaki and Waikato crop growers, dairy farmers, and iwi trusts.
