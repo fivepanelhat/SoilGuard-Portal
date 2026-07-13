@@ -27,11 +27,11 @@ jobs:
         # longer exists on ubuntu-latest (zaproxy) and pointed ZAP at
         # https://example.com — a third-party site we must not scan.
         run: |
-          if compgen -G "tests_security_stress/test_*.py" > /dev/null; then
+          if compgen -G "tests/test_security_stress*.py" > /dev/null; then
             python -m pip install --upgrade pip
             pip install pytest requests
             if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
-            python -m pytest tests_security_stress/ -v --tb=short
+            python -m pytest tests/test_security_stress*.py -v --tb=short
           else
             echo "No local adversarial suite in this repo — nothing to run."
           fi
