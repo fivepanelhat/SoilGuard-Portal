@@ -2,7 +2,7 @@
 
 ![SoilGuard Portal Banner](assets/social_preview.png)
 
-**Coastal Alpine Tech Limited**  
+**Coastal Alpine Tech Limited** — pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
 
@@ -11,6 +11,8 @@ Autonomous on-premise soil quality monitoring and agricultural control system fo
 ---
 
 ## Architecture Overview
+
+> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps — not claims of large-scale commercial fleet deployment.
 
 SoilGuard monitors soil health and fertigation on-device. Sensor streams and optional vision feed **Gemma 4 via Ollama** on **RPi 5 16GB + Hailo-10H**, with actuator lockouts for regulatory safety.
 
@@ -91,7 +93,7 @@ flowchart TB
 
 ## The 5 Ws: Project Context
 
-* **Who:** Developed by Coastal Alpine Tech Limited in partnership with Taranaki and Waikato crop growers, dairy farmers, and iwi trusts.
+* **Who:** Developed by Coastal Alpine Tech Limited intended for collaboration with NZ crop growers, dairy farmers, and iwi trusts (partnerships in development — pre-seed).
 * **What:** An edge-native IoT monitor and agentic control system that ingests soil telemetry (moisture, temperature, EC, N-P-K), visual leaf health cues, and acoustic diagnostics to optimize crop yield and generate council-ready environmental audits.
 * **Where:** Deployed on-premise at nurseries, glasshouses, orchards, and pastoral runoff sites across New Zealand. HQ in New Plymouth, Taranaki.
 * **When:** Active development as of June 2026.
