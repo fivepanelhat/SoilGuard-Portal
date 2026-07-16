@@ -12,10 +12,9 @@
 
 > Sovereign hybrid edge AI for NZ farms and founders - local-first + multi-model, Te Mana Raraunga aligned - collaborating with Venture Taranaki, startups.com investors and Kotahitanga Investment Fund (HITL + cultural advisory for formal approaches).
 
-**Agents inform, draft, prepare, monitor, and remind. Humans advise, sign, file, send, and pay.**  
+**Agents inform, draft, prepare, monitor, and remind. Humans advise, sign, file, send, and pay.** 
 Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) | Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
 <!-- END CAT_CONGRUENCE_SNIPPET -->
-
 
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary--Commercial-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org)
@@ -43,9 +42,8 @@ Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.gith
 
 ![SoilGuard Portal Banner](assets/social_preview.png)
 
-**Coastal Alpine Tech Limited**  pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
+**Coastal Alpine Tech Limited** pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
 *Edge AI | Sovereign Systems | Practical Intelligence*
-
 
 Autonomous on-premise soil quality monitoring and agricultural control system for New Zealand dairy farms, glasshouses, and orchards. Powered by local edge AI, it runs fully offline in remote and regulated rural catchments to maintain data sovereignty.
 
@@ -53,73 +51,73 @@ Autonomous on-premise soil quality monitoring and agricultural control system fo
 
 ## Architecture Overview
 
-> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps  not claims of large-scale commercial fleet deployment.
+> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps not claims of large-scale commercial fleet deployment.
 
 SoilGuard monitors soil health and fertigation on-device. Sensor streams and optional vision feed **Gemma 4 via Ollama** on **RPi 5 16GB + Hailo-10H**, with actuator lockouts for regulatory safety.
 
-![SoilGuard architecture  liquid glass overview](assets/architecture_overview.png)
+![SoilGuard architecture liquid glass overview](assets/architecture_overview.png)
 
 ### System map
 
 ```mermaid
 %%{init: {
-  "theme": "dark",
-  "themeVariables": {
-    "fontSize": "16px",
-    "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
-    "primaryColor": "#0ea5e9",
-    "primaryTextColor": "#f8fafc",
-    "primaryBorderColor": "#38bdf8",
-    "lineColor": "#67e8f9",
-    "secondaryColor": "#1e293b",
-    "tertiaryColor": "#0f172a",
-    "clusterBkg": "#0b1220cc",
-    "clusterBorder": "#38bdf880",
-    "titleColor": "#e2e8f0"
-  },
-  "flowchart": {
-    "nodeSpacing": 40,
-    "rankSpacing": 48,
-    "padding": 20,
-    "htmlLabels": true,
-    "curve": "basis"
-  }
+ "theme": "dark",
+ "themeVariables": {
+ "fontSize": "16px",
+ "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+ "primaryColor": "#0ea5e9",
+ "primaryTextColor": "#f8fafc",
+ "primaryBorderColor": "#38bdf8",
+ "lineColor": "#67e8f9",
+ "secondaryColor": "#1e293b",
+ "tertiaryColor": "#0f172a",
+ "clusterBkg": "#0b1220cc",
+ "clusterBorder": "#38bdf880",
+ "titleColor": "#e2e8f0"
+ },
+ "flowchart": {
+ "nodeSpacing": 40,
+ "rankSpacing": 48,
+ "padding": 20,
+ "htmlLabels": true,
+ "curve": "basis"
+ }
 }}%%
 flowchart TB
 
-    classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
-    classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
-    classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
-    classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
-    classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
-    classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
-    classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
+ classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
+ classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
+ classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
+ classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
+ classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
+ classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
+ classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
 
-    subgraph IN["â'  Field inputs"]
-        S["Soil probes<br/>N-P-K | moisture | pH | EC"]
-        V["Vision optional<br/>leaf / canopy cues"]
-    end
+ subgraph IN[" Field inputs"]
+ S["Soil probes<br/>N-P-K | moisture | pH | EC"]
+ V["Vision optional<br/>leaf / canopy cues"]
+ end
 
-    subgraph EDGE["â'¡ Edge agent  RPi 5 16GB + Hailo-10H"]
-        CORE["Coastal-Alpine-Core"]
-        LLM["Gemma 4 via Ollama"]
-        AG["SoilGuard AI agent"]
-    end
+ subgraph EDGE[" Edge agent RPi 5 16GB + Hailo-10H"]
+ CORE["Coastal-Alpine-Core"]
+ LLM["Gemma 4 via Ollama"]
+ AG["SoilGuard AI agent"]
+ end
 
-    subgraph OUT["â'¢ Control & records"]
-        FERT["Fertigation lockouts / setpoints"]
-        ALERT["Operator alerts"]
-        STORE["Local telemetry | compliance logs"]
-    end
+ subgraph OUT[" Control & records"]
+ FERT["Fertigation lockouts / setpoints"]
+ ALERT["Operator alerts"]
+ STORE["Local telemetry | compliance logs"]
+ end
 
-    S & V --> CORE --> LLM --> AG
-    AG --> FERT & ALERT & STORE
+ S & V --> CORE --> LLM --> AG
+ AG --> FERT & ALERT & STORE
 
-    class S,V sense
-    class CORE,AG core
-    class LLM ai
-    class FERT,ALERT act
-    class STORE store
+ class S,V sense
+ class CORE,AG core
+ class LLM ai
+ class FERT,ALERT act
+ class STORE store
 ```
 
  | Layer | Components | Role |
@@ -131,10 +129,9 @@ flowchart TB
 
 *Full detail: [ARCHITECTURE.md](./ARCHITECTURE.md)*
 
-
 ## The 5 Ws: Project Context
 
-* **Who:** Developed by Coastal Alpine Tech Limited intended for collaboration with NZ crop growers, dairy farmers, and iwi trusts (partnerships in development  pre-seed).
+* **Who:** Developed by Coastal Alpine Tech Limited intended for collaboration with NZ crop growers, dairy farmers, and iwi trusts (partnerships in development pre-seed).
 * **What:** An edge-native IoT monitor and agentic control system that ingests soil telemetry (moisture, temperature, EC, N-P-K), visual leaf health cues, and acoustic diagnostics to optimize crop yield and generate council-ready environmental audits.
 * **Where:** Deployed on-premise at nurseries, glasshouses, orchards, and pastoral runoff sites across New Zealand. HQ in New Plymouth, Taranaki.
 * **When:** Active development as of June 2026.
@@ -144,10 +141,10 @@ flowchart TB
 
 ## The Problem We Are Solving
 
-1. **Cloud Blackouts in Rural NZ**  Remote farms and high-country stations regularly experience cell tower and internet drops, which makes cloud-based agritech platforms unreliable for daily irrigation and compliance data logging.
-2. **Strict Nitrate Application Caps**  The National Environmental Standards for Freshwater (NES-F 2020) limits synthetic nitrogen fertilizer application to **190 kg N/ha/year**. Exceeding this limit leads to substantial fines.
-3. **Erosion & Silt Runoff**  Over-irrigation on clay or silty soils induces soil erosion and carries fertilizer runoff into local rivers, causing a breach of regional permitted activity consents (e.g. Waikato Rule 3.5.5.1).
-4. **Customary Data Rights**  MÄori landowners and iwi trusts managing ancestral *whenua* demand that environmental and production telemetry remain under local custody (respecting *Te Mana Raraunga* or MÄori Data Sovereignty network principles).
+1. **Cloud Blackouts in Rural NZ** Remote farms and high-country stations regularly experience cell tower and internet drops, which makes cloud-based agritech platforms unreliable for daily irrigation and compliance data logging.
+2. **Strict Nitrate Application Caps** The National Environmental Standards for Freshwater (NES-F 2020) limits synthetic nitrogen fertilizer application to **190 kg N/ha/year**. Exceeding this limit leads to substantial fines.
+3. **Erosion & Silt Runoff** Over-irrigation on clay or silty soils induces soil erosion and carries fertilizer runoff into local rivers, causing a breach of regional permitted activity consents (e.g. Waikato Rule 3.5.5.1).
+4. **Customary Data Rights** Maori landowners and iwi trusts managing ancestral *whenua* demand that environmental and production telemetry remain under local custody (respecting *Te Mana Raraunga* or Maori Data Sovereignty network principles).
 
 ---
 
@@ -167,20 +164,20 @@ flowchart TB
 
 ```bash
 SoilGuard-Portal/
-â"œâ"€â"€ portal_schemas/           # Pydantic schemas (compliance, readings, plans)
-â"œâ"€â"€ portal_core/              # Core modules (config, mqtt, av, hardware, pruner)
-â"œâ"€â"€ telemetry_data/           # Local ledger dumps and transient media buffers
-â"œâ"€â"€ tests/                    # Unit and security stress test files
-â"œâ"€â"€ main.py                   # Unattended orchestrator entrypoint
-â"œâ"€â"€ validate.py               # diagnostics boot sequences
-â"œâ"€â"€ setup.py                  # pip installation setup script
-â"œâ"€â"€ soilguard.service         # Systemd service unit template
-â"œâ"€â"€ requirements.txt          # Production package requirements
-â"œâ"€â"€ requirements-dev.txt      # Unit test requirements
-â"œâ"€â"€ .env.example              # Local configuration template
-â"œâ"€â"€ ARCHITECTURE.md           # Mermaid sequence flows and layout mapping
-â"œâ"€â"€ COMPLIANCE.md             # NZ Legislative mapping details
-â""â"€â"€ README.md                 # Project user documentation
+|-- portal_schemas/ # Pydantic schemas (compliance, readings, plans)
+|-- portal_core/ # Core modules (config, mqtt, av, hardware, pruner)
+|-- telemetry_data/ # Local ledger dumps and transient media buffers
+|-- tests/ # Unit and security stress test files
+|-- main.py # Unattended orchestrator entrypoint
+|-- validate.py # diagnostics boot sequences
+|-- setup.py # pip installation setup script
+|-- soilguard.service # Systemd service unit template
+|-- requirements.txt # Production package requirements
+|-- requirements-dev.txt # Unit test requirements
+|-- .env.example # Local configuration template
+|-- ARCHITECTURE.md # Mermaid sequence flows and layout mapping
+|-- COMPLIANCE.md # NZ Legislative mapping details
+-- README.md # Project user documentation
 ```
 
 ---
@@ -189,10 +186,10 @@ SoilGuard-Portal/
 
 ### Hardware Prerequisites
 
-* **Raspberry Pi 5 (16GB RAM)**  Available locally via PB Tech or Kiwi Electronics.
-* **Raspberry Pi AI Accelerator / AI HAT+ 2** (40 TOPS, Hailo-10H NPU)  Key for offline generative AI workloads.
-* **Soil Probes & ESP32 gateway**  Telemetry sensors broadcasting over MQTT.
-* **USB/CSI Camera**  Installed above crop canopy in IP67 enclosure.
+* **Raspberry Pi 5 (16GB RAM)** Available locally via PB Tech or Kiwi Electronics.
+* **Raspberry Pi AI Accelerator / AI HAT+ 2** (40 TOPS, Hailo-10H NPU) Key for offline generative AI workloads.
+* **Soil Probes & ESP32 gateway** Telemetry sensors broadcasting over MQTT.
+* **USB/CSI Camera** Installed above crop canopy in IP67 enclosure.
 
 ### Installation & Setup
 
@@ -216,15 +213,15 @@ python bootstrap.py
 
 1. **Clone the Portal Repository:**
 
-   ```bash
-   git clone https://github.com/fivepanelhat/SoilGuard-Portal.git
-   cd SoilGuard-Portal
-   ```
+ ```bash
+ git clone https://github.com/fivepanelhat/SoilGuard-Portal.git
+ cd SoilGuard-Portal
+ ```
 
 2. **Configure Virtual Environment:**
 
 <details open>
-<summary><strong>ðŸ§ Linux / macOS (Bash)</strong></summary>
+<summary><strong> Linux / macOS (Bash)</strong></summary>
 
 ```bash
 python3 -m venv venv
@@ -237,7 +234,7 @@ cp .env.example .env
 </details>
 
 <details>
-<summary><strong>ðŸªŸ Windows (PowerShell)</strong></summary>
+<summary><strong> Windows (PowerShell)</strong></summary>
 
 ```powershell
 python -m venv venv
@@ -253,22 +250,22 @@ Copy-Item .env.example .env
 
 3. **Deploy Gemma 4 Model:**
 
-   ```bash
-   ollama serve
-   ollama pull gemma4:e4b
-   ```
+ ```bash
+ ollama serve
+ ollama pull gemma4:e4b
+ ```
 
 4. **Verify System Setup:**
 
-   ```bash
-   python validate.py
-   ```
+ ```bash
+ python validate.py
+ ```
 
 5. **Start Orchestrator Daemon:**
 
-   ```bash
-   python main.py
-   ```
+ ```bash
+ python main.py
+ ```
 
 ---
 
@@ -280,5 +277,5 @@ Copy-Item .env.example .env
 
 ---
 
-**Built for New Zealand  data sovereign, edge-native, compliance-aware.**
+**Built for New Zealand data sovereign, edge-native, compliance-aware.**
 Questions or collaboration? Contact Coastal Alpine Tech Limited, New Plymouth, Taranaki.
