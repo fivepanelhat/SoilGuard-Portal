@@ -16,6 +16,38 @@
 Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) | Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
 <!-- END CAT_CONGRUENCE_SNIPPET -->
 
+<!-- BEGIN PROBLEMS_SOLUTIONS_ECONOMY -->
+## Problems we are solving
+
+**SoilGuard** targets soil moisture, nutrients, and nitrate-cap discipline for NZ whenua and pasture systems.
+
+1. **Rural blackouts** - Irrigation and compliance logs must not depend on cloud uptime.
+2. **Nitrate caps** - NES-F synthetic N limits create real fine risk without local evidence trails.
+3. **Runoff and erosion** - Over-irrigation and poor timing damage waterways and consents.
+4. **Customary data rights** - Whenua telemetry belongs under local custody (Te Mana Raraunga).
+
+## Solution we have built
+
+| Built capability | What it does |
+| :--- | :--- |
+| **Multi-modal soil ingestion** | Moisture, EC, N-P-K, vision, acoustic watchdogs |
+| **Local inference** | Ollama / Gemma on RPi 5 + Hailo path |
+| **Actuation hooks** | Irrigation / fertigation under HITL allow-lists |
+| **Council-ready ledgers** | Export patterns for regional reporting |
+
+### Local (Taranaki) and national (Aotearoa) economic benefits
+
+| Lever | Benefit |
+| :--- | :--- |
+| **Regional R&D HQ** | Product design and IP stay in New Plymouth / Taranaki - not only Auckland/offshore SaaS |
+| **Primary-sector productivity** | On-farm and rural tools aim to cut waste, protect consents, and support export competitiveness |
+| **Skilled employment pathways** | Edge install, field support, agritech ops, software, compliance, and cultural advisory roles as pilots scale |
+| **Data sovereignty** | Te Mana Raraunga-aligned local custody keeps high-value operational data onshore |
+| **HITL jobs quality** | Agents **inform / draft / prepare / monitor / remind**; humans **advise / sign / file / send / pay** - augment people, do not fake full autonomy |
+
+**Stage honesty (pre-seed):** Impact today is founder R&D, near-term contractors, and EDA/partner leverage. Permanent multi-region payroll follows paid pilots and revenue - we do not invent headcount claims.
+<!-- END PROBLEMS_SOLUTIONS_ECONOMY -->
+
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary--Commercial-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org)
 [![Ollama](https://img.shields.io/badge/Ollama-Gemma%204-000000?logo=ollama&logoColor=white)](https://ollama.com)
@@ -139,12 +171,6 @@ flowchart TB
 
 ---
 
-## The Problem We Are Solving
-
-1. **Cloud Blackouts in Rural NZ** Remote farms and high-country stations regularly experience cell tower and internet drops, which makes cloud-based agritech platforms unreliable for daily irrigation and compliance data logging.
-2. **Strict Nitrate Application Caps** The National Environmental Standards for Freshwater (NES-F 2020) limits synthetic nitrogen fertilizer application to **190 kg N/ha/year**. Exceeding this limit leads to substantial fines.
-3. **Erosion & Silt Runoff** Over-irrigation on clay or silty soils induces soil erosion and carries fertilizer runoff into local rivers, causing a breach of regional permitted activity consents (e.g. Waikato Rule 3.5.5.1).
-4. **Customary Data Rights** Maori landowners and iwi trusts managing ancestral *whenua* demand that environmental and production telemetry remain under local custody (respecting *Te Mana Raraunga* or Maori Data Sovereignty network principles).
 
 ---
 
