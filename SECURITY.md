@@ -12,7 +12,7 @@ Report it directly to the Chief Architect.
 
 | Channel | Response |
 | ------- | -------- |
-| Dependabot | Weekly dependency PRs — prioritise `security` / high CVEs |
+| Dependabot | Weekly dependency PRs - prioritise `security` / high CVEs |
 | Code scanning / SecOps / Red team | Fix-forward on `main`; never weaken actuator guards |
 | Coastal-Alpine-Core advisories | Bump core pin; re-run portal tests |
 | Org threat register | See coastal-alpine-stack `SECURITY.md` / `SECURITY_POSTURE_REPORT.md` |

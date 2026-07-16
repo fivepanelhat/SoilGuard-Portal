@@ -46,12 +46,12 @@ SoilGuard is calibrated to support permitted activity rules for soil discharges 
 
 ---
 
-## 5. Kaitiakitanga & Māori Data Sovereignty (*Te Mana Raraunga*)
+## 5. Kaitiakitanga & Maori Data Sovereignty (*Te Mana Raraunga*)
 
 In New Zealand, soil (*one*) is considered a *taonga* (treasure) and is deeply connected to catchments and ancestral *whenua* (land).
 
 * **Kaitiakitanga:** The portal supports the practice of environmental guardianship (*kaitiakitanga*) by empowering landowners with local decision-making tools to prevent clay degradation and nitrate leaching.
-* **Data Sovereignty:** Under the principles of *Te Mana Raraunga* (Māori Data Sovereignty), data regarding the health and agricultural output of indigenous whenua must remain under the stewardship of the iwi or hapū who manage it. SoilGuard runs entirely offline on local edge hardware (Raspberry Pi 5 + AI HAT+), guaranteeing that data is never uploaded to offshore cloud servers without explicit customary permission.
+* **Data Sovereignty:** Under the principles of *Te Mana Raraunga* (Maori Data Sovereignty), data regarding the health and agricultural output of indigenous whenua must remain under the stewardship of the iwi or hapu who manage it. SoilGuard runs entirely offline on local edge hardware (Raspberry Pi 5 + AI HAT+), guaranteeing that data is never uploaded to offshore cloud servers without explicit customary permission.
 
 ---
 
