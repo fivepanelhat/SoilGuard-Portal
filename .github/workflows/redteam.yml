@@ -30,6 +30,7 @@ jobs:
           if compgen -G "tests/test_security_stress*.py" > /dev/null; then
             python -m pip install --upgrade pip
             pip install pytest requests
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
             if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
             python -m pytest tests/test_security_stress*.py -v --tb=short
           else
